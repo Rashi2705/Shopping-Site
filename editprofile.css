@@ -1,0 +1,56 @@
+@charset "ISO-8859-1";
+
+.frm input{
+	width:93%;
+	display:flex;
+	margin-bottom:4%;
+	padding:2%;
+}
+
+.editaddr{
+		box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+	padding:4%  0  4% 1%;
+}
+.editaddr p  {
+	text-align:center;
+	height:130px;
+}
+.editaddr button{text-align:center;}
+.container label{
+	float:left;
+	width:33%;
+
+  
+}
+.btn-pp button{
+	  background-color: white;
+	color: black;
+    padding: 16px 35% 16px 35%;
+    font-size: 18px;
+    border: none;
+    margin-top:5%;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+    
+}
+.edittt button{
+		  background-color: #f7e6ff;
+    color: black;
+    padding: 16px 42% 16px 42%;
+    font-size: 18px;
+    border: none;
+    margin-top:5%;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+    
+    
+}
+
+ select {
+  width: 98%;
+  padding: 12px 18px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid black;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
