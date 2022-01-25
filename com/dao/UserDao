@@ -1,0 +1,334 @@
+package com.dao;
+
+import java.util.List;
+
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.hibernate.query.Query;
+
+import com.util.HibernetUtil;
+import com.web.Logincontroller;
+import com.model.Admin;
+import com.model.Blog;
+import com.model.Cart;
+import com.model.Donation;
+import com.model.FeedbackComplaint;
+import com.model.Order_details;
+import com.model.Product_Details;
+import com.model.Seller_Reg;
+import com.model.Thrift_product;
+import com.model.User;
+import com.model.Wishlist;
+
+public class UserDao {
+	public void saveUser(User user) {
+        Transaction transaction = null;
+        try (Session session=HibernetUtil.getFactory().openSession()) {
+             transaction = session.beginTransaction();
+             session.save(user);
+             transaction.commit();
+            session.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+	
+	
+	
+	public void saveBlog(Blog blog) {
+        Transaction transaction = null;
+        try (Session session=HibernetUtil.getFactory().openSession()) {
+           transaction = session.beginTransaction();
+            session.save(blog);
+           transaction.commit();
+            session.close();
+        } catch (Exception e) {
+             e.printStackTrace();
+        }
+    }
+	public void savecart(Cart cart) {
+        Transaction transaction = null;
+        try (Session session=HibernetUtil.getFactory().openSession()) {
+           transaction = session.beginTransaction();
+            session.save(cart);
+           transaction.commit();
+            session.close();
+        } catch (Exception e) {
+             e.printStackTrace();
+        }
+    }
+	public void saveOrder(Order_details order) {
+        Transaction transaction = null;
+        try (Session session=HibernetUtil.getFactory().openSession()) {
+           transaction = session.beginTransaction();
+            session.save(order);
+           transaction.commit();
+            session.close();
+        } catch (Exception e) {
+             e.printStackTrace();
+        }
+    }
+	public void DeleteCart(Cart cart) {
+        Transaction transaction = null;
+        try (Session session=HibernetUtil.getFactory().openSession()) {
+           transaction = session.beginTransaction();
+            session.delete(cart);
+           transaction.commit();
+            session.close();
+        } catch (Exception e) {
+             e.printStackTrace();
+        }
+    }
+	public void savewishlist(Wishlist wish) {
+        Transaction transaction = null;
+        try (Session session=HibernetUtil.getFactory().openSession()) {
+           transaction = session.beginTransaction();
+            session.save(wish);
+           transaction.commit();
+            session.close();
+        } catch (Exception e) {
+             e.printStackTrace();
+        }
+    }
+	public void DeleteWishlist(Wishlist wish) {
+        Transaction transaction = null;
+        try (Session session=HibernetUtil.getFactory().openSession()) {
+           transaction = session.beginTransaction();
+            session.delete(wish);
+           transaction.commit();
+            session.close();
+        } catch (Exception e) {
+             e.printStackTrace();
+        }
+    }
+	public void saveProduct(Product_Details product) {
+        Transaction transaction = null;
+        try (Session session=HibernetUtil.getFactory().openSession()) {
+           transaction = session.beginTransaction();
+            session.save(product);
+           transaction.commit();
+            session.close();
+        } catch (Exception e) {
+             e.printStackTrace();
+        }
+    }
+	public void saveThProduct(Thrift_product product) {
+        Transaction transaction = null;
+        try (Session session=HibernetUtil.getFactory().openSession()) {
+           transaction = session.beginTransaction();
+            session.save(product);
+           transaction.commit();
+            session.close();
+        } catch (Exception e) {
+             e.printStackTrace();
+        }
+    }
+	
+	public void DeleteProduct(Product_Details product) {
+        Transaction transaction = null;
+        try (Session session=HibernetUtil.getFactory().openSession()) {
+           transaction = session.beginTransaction();
+            session.delete(product);
+           transaction.commit();
+            session.close();
+        } catch (Exception e) {
+             e.printStackTrace();
+        }
+    }
+	public void DeleteThProduct(Thrift_product product) {
+        Transaction transaction = null;
+        try (Session session=HibernetUtil.getFactory().openSession()) {
+           transaction = session.beginTransaction();
+            session.delete(product);
+           transaction.commit();
+            session.close();
+        } catch (Exception e) {
+             e.printStackTrace();
+        }
+    }
+	public void saveDonation(Donation donation) {
+        Transaction transaction = null;
+        try (Session session=HibernetUtil.getFactory().openSession()) {
+            transaction = session.beginTransaction();
+            session.save(donation);
+            transaction.commit();
+            session.close();
+        } catch (Exception e) {
+            
+            e.printStackTrace();
+        }
+    }
+	public void saveFeedbackComplaint(FeedbackComplaint feedbackcomplaint) {
+        Transaction transaction = null;
+        try (Session session=HibernetUtil.getFactory().openSession()) {
+            transaction = session.beginTransaction();
+            session.save(feedbackcomplaint);
+            transaction.commit();
+            session.close();
+        } catch (Exception e) {
+            
+            e.printStackTrace();
+        }
+    }
+	
+	public void saveSeller(Seller_Reg sel) {
+        Transaction transaction = null;
+        try (Session session=HibernetUtil.getFactory().openSession()) {
+           transaction = session.beginTransaction();
+            session.save(sel);
+           transaction.commit();
+            session.close();
+        } catch (Exception e) {
+             e.printStackTrace();
+        }
+    }
+	
+	
+	public boolean validateEmail(String email_id) {
+
+        Transaction transaction = null;
+        User user = null;
+        try (Session session = HibernetUtil.getFactory().openSession()) {
+            // start a transaction
+            transaction = session.beginTransaction();
+            // get an user object
+            user = (User) session.createQuery("FROM User E WHERE E.email_id = :email_id").setParameter("email_id", email_id)
+                .uniqueResult();
+
+            if (user != null) {
+                return true;
+            }
+            // commit transaction
+            transaction.commit();
+        } catch (Exception e) {
+           
+            e.printStackTrace();
+        }
+        return false;
+    }
+	public boolean validateseller(String S_email, String S_password) {
+		JavaBase64 secure=new JavaBase64();
+        Transaction transaction = null;
+        Seller_Reg user = null;
+        try (Session session = HibernetUtil.getFactory().openSession()) {
+            // start a transaction
+            transaction = session.beginTransaction();
+            // get an user object
+            user = (Seller_Reg) session.createQuery("FROM Seller_Reg E WHERE E.S_email = :S_email").setParameter("S_email", S_email)
+                .uniqueResult();
+String spass=user.getS_password();
+            if (user != null && secure.Decrypt(spass).equals(S_password)) {
+                return true;
+            }
+            // commit transaction
+            transaction.commit();
+        } catch (Exception e) {
+           
+            e.printStackTrace();
+        }
+        return false;
+    }
+	public boolean validate(String email_id, String password) {
+		 JavaBase64 encode=new JavaBase64();
+        Transaction transaction = null;
+        User user = null;
+        try (Session session = HibernetUtil.getFactory().openSession()) {
+            // start a transaction
+            transaction = session.beginTransaction();
+            // get an user object
+            user = (User) session.createQuery("FROM User E WHERE E.email_id = :email_id").setParameter("email_id", email_id)
+                .uniqueResult();
+String passcode=user.getPassword();
+            if (user != null && encode.Decrypt(passcode).equals(password)) {
+                return true;
+            }
+            // commit transaction
+            transaction.commit();
+        } catch (Exception e) {
+           
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+	public boolean validateadmin(String email_id, String password) {
+		JavaBase64 encode=new JavaBase64();
+        Transaction transaction = null;
+        Admin admin = null;
+        try (Session session = HibernetUtil.getFactory().openSession()) {
+            // start a transaction
+            transaction = session.beginTransaction();
+            // get an user object
+            admin = (Admin) session.createQuery("FROM Admin A WHERE A.email = :email_id").setParameter("email_id", email_id)
+                .uniqueResult();
+String passcode=admin.getPassword();
+            if (admin != null && encode.Decrypt(passcode).equals(password)) {
+                return true;
+            }
+            // commit transaction
+            transaction.commit();
+        } catch (Exception e) {
+           
+            e.printStackTrace();
+        }
+        return false;
+        
+    }
+	
+	
+	public boolean update(User user) {
+		boolean result = true;
+	
+		Transaction transaction = null;
+		  try (Session session = HibernetUtil.getFactory().openSession()) {
+	           
+			transaction = session.beginTransaction();
+			session.update(user);
+			transaction.commit();
+		} catch (Exception e) {
+			if (transaction != null) {
+				transaction.rollback();
+			}
+			result = false;
+		}
+
+		return result;
+	}
+	public boolean update( Product_Details product) {
+		boolean result = true;
+	
+		Transaction transaction = null;
+		  try (Session session = HibernetUtil.getFactory().openSession()) {
+	           
+			transaction = session.beginTransaction();
+			session.update(product);
+			transaction.commit();
+		} catch (Exception e) {
+			if (transaction != null) {
+				transaction.rollback();
+			}
+			result = false;
+		}
+
+		return result;
+	}
+	public boolean Thupdate(Thrift_product product) {
+		boolean result = true;
+	
+		Transaction transaction = null;
+		  try (Session session = HibernetUtil.getFactory().openSession()) {
+	           
+			transaction = session.beginTransaction();
+			session.update(product);
+			transaction.commit();
+		} catch (Exception e) {
+			if (transaction != null) {
+				transaction.rollback();
+			}
+			result = false;
+		}
+
+		return result;
+	}
+}
+
